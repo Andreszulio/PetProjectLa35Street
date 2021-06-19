@@ -2,8 +2,9 @@ package co.com.sofka.La35Street.domain.Purchase;
 
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-
+@Document(collation = "Client")
 public class Client extends Entity<ClientId> {
     private final ClientName clientName;
     private final ClientAdress clientAdress;

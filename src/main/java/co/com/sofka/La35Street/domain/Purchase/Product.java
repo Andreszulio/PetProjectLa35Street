@@ -2,7 +2,9 @@ package co.com.sofka.La35Street.domain.Purchase;
 
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collation = "Product")
 public class Product extends Entity<ProductId> {
     private final Brand brand;
     private final ProductName productName;

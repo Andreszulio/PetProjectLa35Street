@@ -12,6 +12,5 @@ public class IsCancelled implements ValueObject<Boolean> {
     @Override
     public Boolean value() {
         return Cancelled;
-
     }
 }

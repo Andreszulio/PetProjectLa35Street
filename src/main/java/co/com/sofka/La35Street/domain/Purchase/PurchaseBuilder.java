@@ -1,9 +1,6 @@
 package co.com.sofka.La35Street.domain.Purchase;
 
-import co.com.sofka.La35Street.domain.Purchase.values.ClientId;
-import co.com.sofka.La35Street.domain.Purchase.values.IsCancelled;
-import co.com.sofka.La35Street.domain.Purchase.values.PurchaseDate;
-import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
+import co.com.sofka.La35Street.domain.Purchase.values.*;
 
 import java.util.List;
 
@@ -17,6 +14,30 @@ public final class PurchaseBuilder {
     private PurchaseBuilder(){
     }
 
-
-
+    public static PurchaseBuilder aPurchase(){
+        return new PurchaseBuilder();
+    }
+    public PurchaseBuilder withPurchasePrice(PurchasePrice purchasePrice){
+        this.purchasePrice = purchasePrice;
+        return this;
+    }
+    public PurchaseBuilder withPurchaseDate(PurchaseDate purchaseDate){
+        this.purchaseDate = purchaseDate;
+        return this;
+    }
+    public PurchaseBuilder withClientId(ClientId clientId){
+        this.clientId = clientId;
+        return this;
+    }
+    public PurchaseBuilder withProduct(List<Product> product){
+        this.product = product;
+        return this;
+    }
+    public PurchaseBuilder withIsCancelled(IsCancelled cancelled){
+        this.cancelled = cancelled;
+        return this;
+    }
+    public Purchase build(){
+        return new Purchase(null,purchasePrice, purchaseDate,clientId, product, cancelled);
+    }
 }

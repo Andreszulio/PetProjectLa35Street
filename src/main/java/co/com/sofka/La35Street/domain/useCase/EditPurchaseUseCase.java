@@ -6,17 +6,15 @@ import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.business.support.ResponseEvents;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, ResponseEvents> {
+public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, EditPurchaseUseCase.Response> {
 
     @Override
     public void executeUseCase(RequestCommand<EditPurchase> editPurchaseRequestCommand) {
         var command = editPurchaseRequestCommand.getCommand();
-        var purchase = Purchase.from(command.PurchaseId(),retrieveEvents());
         var purchaseprice = CalculatePrice(command.Product());
     }
     public PurchasePrice CalculatePrice(List<Product> productList){
@@ -27,5 +25,21 @@ public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, R
             price+=element;
         }
         return new PurchasePrice(price);
+    }
+    public static class Response implements UseCase.ResponseValues{
+
+        private Purchase purchase;
+
+        public Response(Purchase purchase){
+            this.purchase = purchase;
+        }
+
+        public Purchase getPurchase(){
+            return purchase;
+        }
+
+        public void setPurchase(Purchase purchase) {
+            this.purchase = purchase;
+        }
     }
 }

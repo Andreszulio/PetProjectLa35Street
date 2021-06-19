@@ -6,17 +6,16 @@ import co.com.sofka.La35Street.domain.Purchase.commands.AddPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.business.support.ResponseEvents;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, ResponseEvents> {
+public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, CreatePurchaseUseCase.Response> {
+
     @Override
     public void executeUseCase(RequestCommand<AddPurchase> CreateProductRequestCommand) {
         var command = CreateProductRequestCommand.getCommand();
-        var purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.ClientId(),command.ProductList());
-        emit().onResponse(new ResponseEvents(purchase.getUncommittedChanges()));
+        var purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList(),command.IsCancelled());
     }
     public PurchasePrice CalculatePrice(List<Product> productList){
         List<Integer> Prices = new ArrayList<>();
@@ -26,5 +25,22 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
             price+=element;
         }
         return new PurchasePrice(price);
+    }
+    public static class Response implements UseCase.ResponseValues{
+
+        private Purchase purchase;
+
+        public Response(Purchase purchase){
+            this.purchase = purchase;
+        }
+
+        public Purchase getPurchase() {
+            return purchase;
+        }
+
+        public void setPurchase(Purchase purchase) {
+            this.purchase = purchase;
+        }
+
     }
 }

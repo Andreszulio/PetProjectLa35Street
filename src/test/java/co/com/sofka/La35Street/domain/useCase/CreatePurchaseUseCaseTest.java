@@ -3,8 +3,6 @@ package co.com.sofka.La35Street.domain.useCase;
 import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
-import co.com.sofka.business.generic.UseCaseHandler;
-import co.com.sofka.business.support.RequestCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +19,8 @@ class CreatePurchaseUseCaseTest {
                 new Product(ProductId.of("25-36"), new Brand("Adidas"), new ProductName("Camiseta"), new ProductPrice(39000))
         ));
         var usecase = new CreatePurchaseUseCase();
-        var events = UseCaseHandler.getInstance()
-                .syncExecutor(usecase,new RequestCommand<>(command)).orElseThrow().getDomainEvents();
+        var response = new CreatePurchaseUseCase.Response();
+
         Assertions.assertEquals("123",command.PurchaseId().value());
         Assertions.assertEquals("567",command.ClientId().value());
         Assertions.assertNotNull(command.ProductList());
