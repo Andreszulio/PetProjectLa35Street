@@ -1,7 +1,6 @@
 package co.com.sofka.La35Street.domain.Purchase.events;
 
 import co.com.sofka.La35Street.domain.Purchase.Product;
-import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
 import co.com.sofka.domain.generic.DomainEvent;
 
