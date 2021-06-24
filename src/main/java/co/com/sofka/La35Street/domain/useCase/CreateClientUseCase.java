@@ -36,3 +36,4 @@ public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, Canc
         }
     }
 }
+
