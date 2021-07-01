@@ -4,18 +4,29 @@ import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.Purchase;
 import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
+import co.com.sofka.La35Street.repository.IPurchaseRepository;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, EditPurchaseUseCase.Response> {
+
+    @Autowired
+    private IPurchaseRepository iPurchaseRepository;
 
     @Override
     public void executeUseCase(RequestCommand<EditPurchase> editPurchaseRequestCommand) {
         var command = editPurchaseRequestCommand.getCommand();
         var purchaseprice = CalculatePrice(command.Product());
+
+        iPurchaseRepository.save(purchaseId);
+        emit().onResponse(new CreatePurchaseUseCase.Response(purchaseId));
+
     }
     public PurchasePrice CalculatePrice(List<Product> productList){
         List<Integer> Prices = new ArrayList<>();

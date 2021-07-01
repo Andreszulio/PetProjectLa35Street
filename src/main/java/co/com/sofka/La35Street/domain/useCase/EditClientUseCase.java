@@ -10,6 +10,8 @@ public class EditClientUseCase extends UseCase<RequestCommand<EditClient>, EditP
     @Override
     public void executeUseCase(RequestCommand<EditClient> editClientRequestCommand) {
         var command = editClientRequestCommand.getCommand();
+        var client = new Client(command.ClientAdress(),command.ClientTelephone());
+
     }
     public static class Response implements UseCase.ResponseValues{
 
