@@ -19,7 +19,7 @@ public class PurchaseController {
     @Autowired
     private CreatePurchaseUseCase useCase;
 
-    @PostMapping(value = "api/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}/")
+    @PostMapping(value = "api/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
     public String save(@PathVariable("purchaseId")String purchaseId,
                        @PathVariable("clientId")String clientId,
                        @PathVariable("productId")String productId,
