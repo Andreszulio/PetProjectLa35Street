@@ -1,9 +1,7 @@
 package co.com.sofka.La35Street.domain.useCase;
 
-import co.com.sofka.La35Street.domain.Purchase.Purchase;
 import co.com.sofka.La35Street.domain.Purchase.commands.CancellPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.IsCancelled;
-import co.com.sofka.La35Street.repository.IPurchaseRepository;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;

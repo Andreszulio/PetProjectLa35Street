@@ -2,6 +2,7 @@ package co.com.sofka.La35Street.domain.Purchase;
 
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.AggregateRoot;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -10,6 +11,8 @@ import java.util.List;
 @Document(collation = "Purchase")
 public class Purchase extends AggregateRoot<PurchaseId> {
 
+    @Id
+    protected String Id;
     protected PurchasePrice purchasePrice;
     protected PurchaseDate purchaseDate;
     protected ClientId clientId;
@@ -18,11 +21,20 @@ public class Purchase extends AggregateRoot<PurchaseId> {
 
     public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product, IsCancelled cancelled) {
         super(purchaseId);
+        this.Id = entityId.value();
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
         this.product = product;
         this.cancelled = cancelled;
+    }
+
+    public void Id(String id) {
+        this.Id = id;
+    }
+
+    public String Id() {
+        return Id;
     }
 
     public PurchasePrice PurchasePrice() {

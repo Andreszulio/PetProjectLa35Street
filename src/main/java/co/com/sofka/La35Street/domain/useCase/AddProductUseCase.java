@@ -4,7 +4,6 @@ import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddProduct;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.La35Street.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, CancellPurchaseUseCase.Response> {
 
     @Autowired
-    private IProductRepository productRepository;
+    //private IProductDataRepository iproductDataRepository;
 
     @Override
     public void executeUseCase(RequestCommand<AddProduct> AddProductRequestCommand) {

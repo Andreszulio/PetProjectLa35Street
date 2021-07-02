@@ -2,9 +2,9 @@ package co.com.sofka.La35Street.domain.useCase;
 
 import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.Purchase;
-import co.com.sofka.La35Street.repository.IPurchaseRepository;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
+import co.com.sofka.La35Street.repository.IPurchaseDataRepository;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, CreatePurchaseUseCase.Response> {
 
     @Autowired
-    private IPurchaseRepository iPurchaseRepository;
+    private IPurchaseDataRepository iPurchaseDataRepository;
 
     @Override
     public void executeUseCase(RequestCommand<AddPurchase> CreateProductRequestCommand) {
@@ -25,7 +25,7 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
         var command = CreateProductRequestCommand.getCommand();
         var purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList(),command.IsCancelled());
 
-        iPurchaseRepository.save(purchase);
+        //iPurchaseDataRepository.save(transform)
         emit().onResponse(new Response(purchase));
 
     }
