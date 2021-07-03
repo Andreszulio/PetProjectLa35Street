@@ -109,17 +109,17 @@ public class CreatePurchaseController {
 
     @GetMapping(value = "api/findPurchase")
     public Iterable<PurchaseData> list(){
-        return (purchaseTransformUseCase.list());
+        return purchaseTransformUseCase.list();
     }
 
     @GetMapping(value = "api/findPurchase/{purchaseId}")
     public PurchaseData listId(@PathVariable("purchaseId") String id){
-        return (purchaseTransformUseCase.listId(id));
+        return purchaseTransformUseCase.listId(id);
     }
 
     @DeleteMapping(value = "api/delete/{purchaseId}")
     public String delete(@PathVariable("purchaseId") String id){
-        return (purchaseTransformUseCase.delete(id));
+        return purchaseTransformUseCase.delete(id);
     }
 
 }
