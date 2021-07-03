@@ -5,6 +5,7 @@ import co.com.sofka.La35Street.domain.Purchase.Purchase;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
 import co.com.sofka.La35Street.repository.IPurchaseDataRepository;
+import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,18 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
     public void executeUseCase(RequestCommand<AddPurchase> CreateProductRequestCommand) {
 
         AddPurchase command = CreateProductRequestCommand.getCommand();
-        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList(),command.IsCancelled());
+        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList());
 
-        //iPurchaseDataRepository.save(transform)
+        iPurchaseDataRepository.save(purchaseTransform(purchase));
         emit().onResponse(new Response(purchase));
 
     }
+
+    public PurchaseData purchaseTransform(Purchase purchase){
+        PurchaseData purchaseData = new PurchaseData(purchase.Id(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value(),purchase.Product());
+        return purchaseData;
+    }
+
     public PurchasePrice CalculatePrice(List<Product> productList){
 
         List<Integer> Prices = new ArrayList<>();

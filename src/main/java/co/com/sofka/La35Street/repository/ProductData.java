@@ -8,6 +8,7 @@ public class ProductData {
 
     @Id
     protected String id;
+    
     protected String brand;
     protected String productName;
     protected Integer productPrice;

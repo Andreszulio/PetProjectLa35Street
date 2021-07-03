@@ -2,7 +2,9 @@ package co.com.sofka.La35Street.repository;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "Client")
 public class ClientData {
 
     @Id

@@ -13,20 +13,19 @@ public class Purchase extends AggregateRoot<PurchaseId> {
 
     @Id
     protected String Id;
+
     protected PurchasePrice purchasePrice;
     protected PurchaseDate purchaseDate;
     protected ClientId clientId;
     protected List<Product> product;
-    protected IsCancelled cancelled;
 
-    public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product, IsCancelled cancelled) {
+    public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product) {
         super(purchaseId);
         this.Id = purchaseId.value();
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
         this.product = product;
-        this.cancelled = cancelled;
     }
 
     public void Id(String id) {
@@ -53,7 +52,4 @@ public class Purchase extends AggregateRoot<PurchaseId> {
         return product;
     }
 
-    public IsCancelled Cancelled() {
-        return cancelled;
-    }
 }

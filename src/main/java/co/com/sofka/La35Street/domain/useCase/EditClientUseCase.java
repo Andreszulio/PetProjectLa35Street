@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EditClientUseCase extends UseCase<RequestCommand<EditClient>, EditPurchaseUseCase.Response> {
+public class EditClientUseCase extends UseCase<RequestCommand<EditClient>, EditClientUseCase.Response> {
 
     @Autowired
     private IClientDataRepository iClientDataRepository;
@@ -21,6 +21,7 @@ public class EditClientUseCase extends UseCase<RequestCommand<EditClient>, EditP
         var client = new Client(command.ClientId(),command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone());
 
         iClientDataRepository.save(clientTransform(client));
+        emit().onResponse(new Response(client));
 
     }
 

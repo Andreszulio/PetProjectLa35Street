@@ -10,6 +10,7 @@ public class Client extends Entity<ClientId> {
 
     @Id
     private final String id;
+
     private final ClientName clientName;
     private final ClientAdress clientAdress;
     private final ClientEmailAdress clientEmailAdress;

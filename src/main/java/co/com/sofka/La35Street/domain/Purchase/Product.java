@@ -9,7 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Product extends Entity<ProductId> {
 
     @Id
-    private final String id;
+    private String id;
+
     private final Brand brand;
     private final ProductName productName;
     private final ProductPrice productPrice;
@@ -36,5 +37,9 @@ public class Product extends Entity<ProductId> {
 
     public String Id() {
         return id;
+    }
+
+    public void Id(String id) {
+        this.id = id;
     }
 }

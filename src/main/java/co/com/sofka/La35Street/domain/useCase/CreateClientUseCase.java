@@ -2,21 +2,35 @@ package co.com.sofka.La35Street.domain.useCase;
 
 import co.com.sofka.La35Street.domain.Purchase.Client;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddClient;
-import co.com.sofka.La35Street.domain.Purchase.events.AggregateClient;
+import co.com.sofka.La35Street.repository.ClientData;
+import co.com.sofka.La35Street.repository.IClientDataRepository;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.domain.generic.DomainEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, CancellPurchaseUseCase.Response> {
+@Service
+public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, CreateClientUseCase.Response> {
+
+    @Autowired
+    private IClientDataRepository iClientDataRepository;
 
     @Override
     public void executeUseCase(RequestCommand<AddClient> CreateClientRequestCommand) {
         AddClient command = CreateClientRequestCommand.getCommand();
         Client client = new Client(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone());
+
+        iClientDataRepository.save(clientTransform(client));
+        emit().onResponse(new Response(client));
+
     }
+
+    public ClientData clientTransform(Client client){
+        ClientData clientData = new ClientData(client.Id(),client.ClientName().value(),client.ClientAdress().value(),client.ClientEmailAdress().value(),client.ClientTelephone().value());
+        return clientData;
+    }
+
     public static class Response implements UseCase.ResponseValues{
 
         private Client client;

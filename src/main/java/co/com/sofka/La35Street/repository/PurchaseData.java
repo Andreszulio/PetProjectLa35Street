@@ -9,20 +9,21 @@ import java.util.List;
 
 @Document(collection = "Purchase")
 public class PurchaseData {
+
     @Id
     protected String id;
+
     protected Integer purchasePrice;
     protected LocalDateTime purchaseDate;
     protected String clientId;
     protected List<Product> product;
-    protected Boolean isCancelled;
 
-    public PurchaseData(String id,Integer purchasePrice, LocalDateTime purchaseDate, String clientId, List<Product> product, Boolean isCancelled) {
+    public PurchaseData(String id,Integer purchasePrice, LocalDateTime purchaseDate, String clientId, List<Product> product) {
+        this.id = id;
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
         this.product = product;
-        this.isCancelled = isCancelled;
     }
 
     public PurchaseData(){
@@ -68,11 +69,4 @@ public class PurchaseData {
         this.product = product;
     }
 
-    public Boolean Cancelled() {
-        return isCancelled;
-    }
-
-    public void Cancelled(Boolean cancelled) {
-        isCancelled = cancelled;
-    }
 }

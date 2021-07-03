@@ -38,6 +38,6 @@ public final class PurchaseBuilder {
         return this;
     }
     public Purchase build(){
-        return new Purchase(null,purchasePrice, purchaseDate,clientId, product, cancelled);
+        return new Purchase(null,purchasePrice, purchaseDate,clientId, product);
     }
 }
