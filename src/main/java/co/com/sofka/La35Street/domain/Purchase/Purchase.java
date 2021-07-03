@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "Purchase")
+@Document(collection = "Purchase")
 public class Purchase extends AggregateRoot<PurchaseId> {
 
     @Id
@@ -21,7 +21,7 @@ public class Purchase extends AggregateRoot<PurchaseId> {
 
     public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product, IsCancelled cancelled) {
         super(purchaseId);
-        this.Id = entityId.value();
+        this.Id = purchaseId.value();
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;

@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransformacionUseCase {
+public class PurchaseTransformUseCase {
 
     @Autowired
     private IPurchaseDataRepository iPurchaseDataRepository;
 
-    public PurchaseData transform(Purchase purchase){
+    public PurchaseData purchaseTransform(Purchase purchase){
         PurchaseData purchaseData = new PurchaseData(purchase.Id(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value(),purchase.Product(),purchase.Cancelled().value());
         return purchaseData;
     }

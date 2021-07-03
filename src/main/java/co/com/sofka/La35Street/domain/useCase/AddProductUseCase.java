@@ -15,8 +15,8 @@ public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, Cance
 
     @Override
     public void executeUseCase(RequestCommand<AddProduct> AddProductRequestCommand) {
-        var command = AddProductRequestCommand.getCommand();
-        var product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice());
+        AddProduct command = AddProductRequestCommand.getCommand();
+        Product product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice());
     }
     public static class Response implements UseCase.ResponseValues{
 

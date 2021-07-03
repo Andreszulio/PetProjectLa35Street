@@ -5,6 +5,7 @@ import co.com.sofka.La35Street.domain.Purchase.Purchase;
 import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.PurchasePrice;
 import co.com.sofka.La35Street.repository.IPurchaseDataRepository;
+import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,19 @@ public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, E
 
     @Override
     public void executeUseCase(RequestCommand<EditPurchase> editPurchaseRequestCommand) {
-        var command = editPurchaseRequestCommand.getCommand();
-        var purchaseprice = CalculatePrice(command.Product());
+        EditPurchase command = editPurchaseRequestCommand.getCommand();
+        PurchasePrice purchaseprice = CalculatePrice(command.Product());
+        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.Product()),command.PurchaseDate(),command.ClientId(),command.Product(),command.Cancelled());
 
-        //iPurchaseRepository.save(purchaseId);
-       // emit().onResponse(new CreatePurchaseUseCase.Response(purchaseId));
+        iPurchaseDataRepository.save(purchaseTransform(purchase));
 
     }
+
+    public PurchaseData purchaseTransform(Purchase purchase){
+        PurchaseData purchaseData = new PurchaseData(purchase.Id(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value(),purchase.Product(),purchase.Cancelled().value());
+        return purchaseData;
+    }
+
     public PurchasePrice CalculatePrice(List<Product> productList){
         List<Integer> Prices = new ArrayList<>();
         Integer price=0;
@@ -37,6 +44,7 @@ public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, E
         }
         return new PurchasePrice(price);
     }
+
     public static class Response implements UseCase.ResponseValues{
 
         private Purchase purchase;

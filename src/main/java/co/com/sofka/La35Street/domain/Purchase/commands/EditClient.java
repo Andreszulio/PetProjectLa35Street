@@ -1,24 +1,27 @@
 package co.com.sofka.La35Street.domain.Purchase.commands;
 
 
-import co.com.sofka.La35Street.domain.Purchase.values.ClientAdress;
-import co.com.sofka.La35Street.domain.Purchase.values.ClientEmailAdress;
-import co.com.sofka.La35Street.domain.Purchase.values.ClientName;
-import co.com.sofka.La35Street.domain.Purchase.values.ClientTelephone;
+import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.Command;
 
 public class EditClient implements Command {
+    private final ClientId clientId;
     private final ClientName clientName;
     private final ClientAdress clientAdress;
     private final ClientEmailAdress clientEmailAdress;
     private final ClientTelephone clientTelephone;
 
 
-    public EditClient(ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress, ClientTelephone clientTelephone) {
+    public EditClient(ClientId clientId, ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress, ClientTelephone clientTelephone) {
+        this.clientId = clientId;
         this.clientName = clientName;
         this.clientAdress = clientAdress;
         this.clientEmailAdress = clientEmailAdress;
         this.clientTelephone = clientTelephone;
+    }
+
+    public ClientId ClientId() {
+        return clientId;
     }
 
     public ClientName ClientName() {
@@ -36,4 +39,5 @@ public class EditClient implements Command {
     public ClientTelephone ClientTelephone() {
         return clientTelephone;
     }
+
 }

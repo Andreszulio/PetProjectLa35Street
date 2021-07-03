@@ -14,10 +14,8 @@ public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, Canc
 
     @Override
     public void executeUseCase(RequestCommand<AddClient> CreateClientRequestCommand) {
-        var command = CreateClientRequestCommand.getCommand();
-        var client = new Client(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone());
-        List<DomainEvent> events = new ArrayList<>();
-        events.add(new AggregateClient(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone()));
+        AddClient command = CreateClientRequestCommand.getCommand();
+        Client client = new Client(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone());
     }
     public static class Response implements UseCase.ResponseValues{
 

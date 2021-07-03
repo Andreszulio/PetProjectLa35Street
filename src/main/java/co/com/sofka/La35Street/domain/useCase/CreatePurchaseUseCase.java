@@ -22,8 +22,8 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
     @Override
     public void executeUseCase(RequestCommand<AddPurchase> CreateProductRequestCommand) {
 
-        var command = CreateProductRequestCommand.getCommand();
-        var purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList(),command.IsCancelled());
+        AddPurchase command = CreateProductRequestCommand.getCommand();
+        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList(),command.IsCancelled());
 
         //iPurchaseDataRepository.save(transform)
         emit().onResponse(new Response(purchase));

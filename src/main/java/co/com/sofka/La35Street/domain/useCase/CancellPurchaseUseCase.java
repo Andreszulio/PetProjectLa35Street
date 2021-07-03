@@ -2,6 +2,7 @@ package co.com.sofka.La35Street.domain.useCase;
 
 import co.com.sofka.La35Street.domain.Purchase.commands.CancellPurchase;
 import co.com.sofka.La35Street.domain.Purchase.values.IsCancelled;
+import co.com.sofka.La35Street.repository.IPurchaseDataRepository;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Service;
 public class CancellPurchaseUseCase extends UseCase<RequestCommand<CancellPurchase>, CancellPurchaseUseCase.Response >{
 
     @Autowired
-    private IPurchaseRepository purchaseRepository;
+    private IPurchaseDataRepository iPurchaseDataRepository;
 
     @Override
     public void executeUseCase(RequestCommand<CancellPurchase> cancellPurchaseRequestCommand) {
-        var command = cancellPurchaseRequestCommand.getCommand();
+        CancellPurchase command = cancellPurchaseRequestCommand.getCommand();
         emit().onResponse(new Response(command.isCancelled()));
     }
     public static class Response implements UseCase.ResponseValues{

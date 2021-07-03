@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class PurchaseController {
+public class CreatePurchaseController {
 
     @Autowired
     private CreatePurchaseUseCase useCase;
@@ -26,22 +26,32 @@ public class PurchaseController {
                        @PathVariable("brand")String brand,
                        @PathVariable("productName")String productName,
                        @PathVariable("productPrice")Integer productPrice) {
-        var product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice));
+        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice));
 
         List<Product> productList = new ArrayList<>();
         productList.add(product);
 
-        var command = new AddPurchase(PurchaseId.of(purchaseId), new ClientId(clientId), productList);
-        
+        AddPurchase command = new AddPurchase(PurchaseId.of(purchaseId), new ClientId(clientId), productList);
+
         CreatePurchaseUseCase.Response purchaseCreated = executedUseCase(command);
-        return(purchaseCreated.getPurchase().PurchasePrice().value()+ " "+ purchaseCreated.getPurchase().PurchaseDate().value()+" "+purchaseCreated.getPurchase().ClientId().value()+" "+purchaseCreated.getPurchase().Product());
+
+        String string = "{"
+                + "\"purchaseId\":" + "\""+purchaseCreated.getPurchase().Id()+"\""+ ","
+                + "\"purchasePrice\":" + "\""+purchaseCreated.getPurchase().PurchasePrice().value()+"\""+ ","
+                + "\"purchaseDate\":" + "\""+purchaseCreated.getPurchase().PurchaseDate().value()+"\""+ ","
+                + "\"clientId\":" + "\""+purchaseCreated.getPurchase().ClientId().value()+"\""+ ","
+                + "\"product\":" + "\""+purchaseCreated.getPurchase().Product()
+                +"}";
+
+        return string;
     }
 
     private CreatePurchaseUseCase.Response executedUseCase(AddPurchase command) {
-        var events = UseCaseHandler.getInstance()
+        CreatePurchaseUseCase.Response events = UseCaseHandler.getInstance()
                 .syncExecutor(useCase, new RequestCommand<>(command))
                 .orElseThrow();
-        var PurchaseCreated = events;
+        CreatePurchaseUseCase.Response PurchaseCreated = events;
         return PurchaseCreated;
     }
+
 }

@@ -2,10 +2,14 @@ package co.com.sofka.La35Street.domain.Purchase;
 
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.Entity;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation = "Client")
+@Document(collection = "Client")
 public class Client extends Entity<ClientId> {
+
+    @Id
+    private final String id;
     private final ClientName clientName;
     private final ClientAdress clientAdress;
     private final ClientEmailAdress clientEmailAdress;
@@ -13,6 +17,7 @@ public class Client extends Entity<ClientId> {
 
     public Client(ClientId entityId,ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress,ClientTelephone clientTelephone){
         super(entityId);
+        this.id = entityId.value();
         this.clientName = clientName;
         this.clientAdress = clientAdress;
         this.clientEmailAdress = clientEmailAdress;
@@ -33,5 +38,9 @@ public class Client extends Entity<ClientId> {
 
     public ClientTelephone ClientTelephone() {
         return clientTelephone;
+    }
+
+    public String Id() {
+        return id;
     }
 }
