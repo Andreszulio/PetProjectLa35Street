@@ -18,7 +18,7 @@ public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, AddPr
     @Override
     public void executeUseCase(RequestCommand<AddProduct> AddProductRequestCommand) {
         AddProduct command = AddProductRequestCommand.getCommand();
-        Product product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice());
+        Product product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice(),command.PurchaseId());
 
         iproductDataRepository.save(productTransform(product));
         emit().onResponse(new Response(product));
@@ -26,7 +26,7 @@ public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, AddPr
     }
 
     public ProductData productTransform(Product product){
-        ProductData productData = new ProductData(product.Id(),product.Brand().value(),product.ProductName().value(),product.productPrice().value());
+        ProductData productData = new ProductData(product.Id(),product.Brand().value(),product.ProductName().value(),product.productPrice().value(),product.PurchaseId().value());
         return productData;
     }
 

@@ -36,7 +36,7 @@ public class CreatePurchaseController {
                        @PathVariable("brand")String brand,
                        @PathVariable("productName")String productName,
                        @PathVariable("productPrice")Integer productPrice) {
-        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice));
+        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice),new PurchaseId(purchaseId));
 
         List<Product> productList = new ArrayList<>();
         productList.add(product);
@@ -75,7 +75,7 @@ public class CreatePurchaseController {
                        @PathVariable("brand")String brand,
                        @PathVariable("productName")String productName,
                        @PathVariable("productPrice")Integer productPrice) {
-        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice));
+        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice),new PurchaseId(purchaseId));
 
         List<Product> productList = new ArrayList<>();
         productList.add(product);

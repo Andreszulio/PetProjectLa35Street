@@ -14,13 +14,15 @@ public class Product extends Entity<ProductId> {
     private final Brand brand;
     private final ProductName productName;
     private final ProductPrice productPrice;
+    private final PurchaseId purchaseId;
 
-    public Product(ProductId entityId, Brand brand, ProductName productName, ProductPrice productPrice) {
+    public Product(ProductId entityId, Brand brand, ProductName productName, ProductPrice productPrice,PurchaseId purchaseId) {
         super(entityId);
         this.id = entityId.value();
         this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
+        this.purchaseId = purchaseId;
     }
 
     public Brand Brand() {
@@ -41,5 +43,9 @@ public class Product extends Entity<ProductId> {
 
     public void Id(String id) {
         this.id = id;
+    }
+
+    public PurchaseId PurchaseId() {
+        return purchaseId;
     }
 }

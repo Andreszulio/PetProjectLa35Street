@@ -13,7 +13,7 @@ public class ProductTransformUseCase {
     private IProductDataRepository iProductDataRepository;
 
     public ProductData productTransform(Product product){
-        ProductData productData = new ProductData(product.Id(),product.Brand().value(),product.ProductName().value(),product.productPrice().value());
+        ProductData productData = new ProductData(product.Id(),product.Brand().value(),product.ProductName().value(),product.productPrice().value(),product.PurchaseId().value());
         return productData;
     }
 
