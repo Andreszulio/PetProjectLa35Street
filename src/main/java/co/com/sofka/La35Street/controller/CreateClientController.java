@@ -2,7 +2,6 @@ package co.com.sofka.La35Street.controller;
 
 import co.com.sofka.La35Street.domain.Purchase.Client;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddClient;
-import co.com.sofka.La35Street.domain.Purchase.commands.EditClient;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.La35Street.domain.useCase.*;
 import co.com.sofka.La35Street.repository.ClientData;
@@ -24,15 +23,15 @@ public class CreateClientController {
     @Autowired
     private ClientTransformUseCase clientTransformUseCase;
 
-    @PostMapping(value = "api/save/{clientId}/{clientName}/{clientAdress}/{clientEmailAdress}/{clientTelephone}")
+    @PostMapping(value = "api/saveClient/{clientId}/{clientName}/{clientAddress}/{clientEmailAddress}/{clientTelephone}")
     public String save(@PathVariable("clientId")String clientId,
                        @PathVariable("clientName")String clientName,
-                       @PathVariable("clientAdress")String clientAdress,
-                       @PathVariable("clientEmailAdress")String clientEmailAdress,
+                       @PathVariable("clientAddress")String clientAddress,
+                       @PathVariable("clientEmailAddress")String clientEmailAddress,
                        @PathVariable("clientTelephone")String clientTelephone){
-        Client client = new Client(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAdress),new ClientEmailAdress(clientEmailAdress),new ClientTelephone(clientTelephone));
+        Client client = new Client(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone));
 
-        AddClient command = new AddClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAdress),new ClientEmailAdress(clientEmailAdress),new ClientTelephone(clientTelephone));
+        AddClient command = new AddClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone));
 
         CreateClientUseCase.Response clientCreated = executedUseCase(command);
 
@@ -55,37 +54,6 @@ public class CreateClientController {
         return ClientCreated;
     }
 
-    @PutMapping(value = "api/edit/{clientId}/{clientName}/{clientAdress}/{clientEmailAdress}/{clientTelephone}")
-    public String edit(@PathVariable("clientId")String clientId,
-                       @PathVariable("clientName")String clientName,
-                       @PathVariable("clientAdress")String clientAdress,
-                       @PathVariable("clientEmailAdress")String clientEmailAdress,
-                       @PathVariable("clientTelephone")String clientTelephone){
-        Client client = new Client(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAdress),new ClientEmailAdress(clientEmailAdress),new ClientTelephone(clientTelephone));
-
-        EditClient command = new EditClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAdress),new ClientEmailAdress(clientEmailAdress),new ClientTelephone(clientTelephone));
-
-        EditClientUseCase.Response clientEdited = executedClientEditedUseCase(command);
-
-        String string = "{"
-                + "\"clientId\":" + "\"" + clientEdited.getClient().Id() + "\"" + ","
-                + "\"clientName\":" + "\"" + clientEdited.getClient().ClientName().value()+ "\"" + ","
-                + "\"clientAdress\":" + "\"" + clientEdited.getClient().ClientAdress().value()+ "\"" + ","
-                + "\"clientEmailAdress\":" + "\"" + clientEdited.getClient().ClientEmailAdress().value()+ "\"" + ","
-                + "\"clientTelephone\":" + "\"" + clientEdited.getClient().ClientTelephone().value()+ "\"" + ","
-                +"}";
-
-        return string;
-    }
-
-    private EditClientUseCase.Response executedClientEditedUseCase(EditClient command){
-        EditClientUseCase.Response events = UseCaseHandler.getInstance()
-                .syncExecutor(editClientUseCase, new RequestCommand<>(command))
-                .orElseThrow();
-        EditClientUseCase.Response ClientEdited = events;
-        return ClientEdited;
-    }
-
     @GetMapping(value = "api/findClient")
     public Iterable<ClientData> list(){
         return clientTransformUseCase.list();
@@ -94,11 +62,6 @@ public class CreateClientController {
     @GetMapping(value = "api/findClient/{clientId}")
     public ClientData listId(@PathVariable("clientId") String id){
         return clientTransformUseCase.listId(id);
-    }
-
-    @DeleteMapping(value = "api/delete/{clientId}")
-    public String delete(@PathVariable("clientId") String id){
-        return clientTransformUseCase.delete(id);
     }
 
 }

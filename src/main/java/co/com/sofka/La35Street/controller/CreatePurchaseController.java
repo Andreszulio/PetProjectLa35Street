@@ -29,7 +29,7 @@ public class CreatePurchaseController {
     @Autowired
     private PurchaseTransformUseCase purchaseTransformUseCase;
 
-    @PostMapping(value = "api/save/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
+    @PostMapping(value = "api/savePurchase/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
     public String save(@PathVariable("purchaseId")String purchaseId,
                        @PathVariable("clientId")String clientId,
                        @PathVariable("productId")String productId,
@@ -68,7 +68,7 @@ public class CreatePurchaseController {
         return PurchaseCreated;
     }
 
-    @PutMapping(value = "api/edit/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
+    @PutMapping(value = "api/editPurchase/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
     public String edit(@PathVariable("purchaseId")String purchaseId,
                        @PathVariable("clientId")String clientId,
                        @PathVariable("productId")String productId,
@@ -108,16 +108,16 @@ public class CreatePurchaseController {
     }
 
     @GetMapping(value = "api/findPurchase")
-    public Iterable<PurchaseData> list(){
+    public Iterable<PurchaseData> listPurchase(){
         return purchaseTransformUseCase.list();
     }
 
     @GetMapping(value = "api/findPurchase/{purchaseId}")
-    public PurchaseData listId(@PathVariable("purchaseId") String id){
+    public PurchaseData listIdPurchase(@PathVariable("purchaseId") String id){
         return purchaseTransformUseCase.listId(id);
     }
 
-    @DeleteMapping(value = "api/delete/{purchaseId}")
+    @DeleteMapping(value = "api/deletePurchase/{purchaseId}")
     public String delete(@PathVariable("purchaseId") String id){
         return purchaseTransformUseCase.delete(id);
     }

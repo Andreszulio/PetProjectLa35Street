@@ -21,7 +21,7 @@ public class AddProductController {
     @Autowired
     private ProductTransformUseCase productTransformUseCase;
 
-    @PostMapping(value = "api/save/{productId}/{brand}/{productPrice}/{productName}/{purchaseId}")
+    @PostMapping(value = "api/saveProduct/{productId}/{brand}/{productPrice}/{productName}/{purchaseId}")
     public String save(@PathVariable("productId") String productId,
                        @PathVariable("brand") String brand,
                        @PathVariable("productPrice") Integer productPrice,
@@ -35,10 +35,10 @@ public class AddProductController {
 
         String string = "{"
                 + "\"productId\":" + "\"" + productAdded.getProduct().Id() + "\"" + ","
-                + "\"brand\":" + "\"" + productAdded.getProduct().Brand() + "\"" + ","
-                + "\"productPrice\":" + "\"" + productAdded.getProduct().productPrice() + "\"" + ","
-                + "\"productName\":" + "\"" + productAdded.getProduct().ProductName() + "\"" + ","
-                + "\"purchaseId\":" + "\"" + productAdded.getProduct().PurchaseId() + "\"" + ","
+                + "\"brand\":" + "\"" + productAdded.getProduct().Brand().value() + "\"" + ","
+                + "\"productPrice\":" + "\"" + productAdded.getProduct().productPrice().value() + "\"" + ","
+                + "\"productName\":" + "\"" + productAdded.getProduct().ProductName().value()+ "\"" + ","
+                + "\"purchaseId\":" + "\"" + productAdded.getProduct().PurchaseId().value()+ "\"" + ","
                 + "}";
 
         return string;
@@ -62,9 +62,9 @@ public class AddProductController {
         return productTransformUseCase.listId(id);
     }
 
-    @DeleteMapping(value = "api/delete/{productId}")
+    @DeleteMapping(value = "api/deleteProduct/{productId}")
     public String delete(@PathVariable("productId") String id){
         return productTransformUseCase.delete(id);
     }
-    
+
 }
