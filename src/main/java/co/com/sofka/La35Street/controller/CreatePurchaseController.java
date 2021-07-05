@@ -2,7 +2,9 @@ package co.com.sofka.La35Street.controller;
 
 import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.useCase.EditPurchaseUseCase;
+import co.com.sofka.La35Street.domain.useCase.ProductTransformUseCase;
 import co.com.sofka.La35Street.domain.useCase.PurchaseTransformUseCase;
+import co.com.sofka.La35Street.repository.ProductData;
 import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
@@ -29,6 +31,9 @@ public class CreatePurchaseController {
     @Autowired
     private PurchaseTransformUseCase purchaseTransformUseCase;
 
+    @Autowired
+    private ProductTransformUseCase productTransformUseCase;
+
     @PostMapping(value = "api/savePurchase/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
     public String save(@PathVariable("purchaseId")String purchaseId,
                        @PathVariable("clientId")String clientId,
@@ -46,7 +51,7 @@ public class CreatePurchaseController {
         CreatePurchaseUseCase.Response purchaseCreated = executedUseCase(command);
 
         String string = "{"
-                + "\"purchaseId\":" + "\"" + purchaseCreated.getPurchase().Id() + "\"" + ","
+                + "\"purchaseId\":" + "\"" + purchaseCreated.getPurchase().getId() + "\"" + ","
                 + "\"purchasePrice\":" + "\"" + purchaseCreated.getPurchase().PurchasePrice().value() + "\"" + ","
                 + "\"purchaseDate\":" + "\"" + purchaseCreated.getPurchase().PurchaseDate().value() + "\"" + ","
                 + "\"clientId\":" + "\"" + purchaseCreated.getPurchase().ClientId().value() + "\"" + ","
@@ -85,7 +90,7 @@ public class CreatePurchaseController {
         EditPurchaseUseCase.Response purchaseEdited = executedEditPurchaseUseCase(command);
 
         String string = "{"
-                + "\"purchaseId\":" + "\""+purchaseEdited.getPurchase().Id()+"\""+ ","
+                + "\"purchaseId\":" + "\""+purchaseEdited.getPurchase().getId()+"\""+ ","
                 + "\"purchasePrice\":" + "\""+purchaseEdited.getPurchase().PurchasePrice().value()+"\""+ ","
                 + "\"purchaseDate\":" + "\""+purchaseEdited.getPurchase().PurchaseDate().value()+"\""+ ","
                 + "\"clientId\":" + "\""+purchaseEdited.getPurchase().ClientId().value()+"\""+ ","
@@ -120,6 +125,11 @@ public class CreatePurchaseController {
     @DeleteMapping(value = "api/deletePurchase/{purchaseId}")
     public String delete(@PathVariable("purchaseId") String id){
         return purchaseTransformUseCase.delete(id);
+    }
+
+    @GetMapping(value = "api/showProducts/{purchaseId}")
+    public Iterable<ProductData> show(@PathVariable("purchaseId") String purchaseId){
+        return productTransformUseCase.findByPurchaseId(purchaseId);
     }
 
 }

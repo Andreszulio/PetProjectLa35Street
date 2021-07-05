@@ -29,11 +29,11 @@ public class PurchaseData {
     public PurchaseData(){
     }
 
-    public String Id() {
+    public String Idaa() {
         return id;
     }
 
-    public void Id(String id) {
+    public void Idbb(String id) {
         this.id = id;
     }
 

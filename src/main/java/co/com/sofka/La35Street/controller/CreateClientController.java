@@ -18,9 +18,6 @@ public class CreateClientController {
     private CreateClientUseCase createClientUseCase;
 
     @Autowired
-    private EditClientUseCase editClientUseCase;
-
-    @Autowired
     private ClientTransformUseCase clientTransformUseCase;
 
     @PostMapping(value = "api/saveClient/{clientId}/{clientName}/{clientAddress}/{clientEmailAddress}/{clientTelephone}")
