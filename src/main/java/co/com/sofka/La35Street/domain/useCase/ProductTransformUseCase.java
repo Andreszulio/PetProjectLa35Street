@@ -12,9 +12,8 @@ public class ProductTransformUseCase {
     @Autowired
     private IProductDataRepository iProductDataRepository;
 
-    public ProductData productTransform(Product product){
-        ProductData productData = new ProductData(product.Id(),product.Brand().value(),product.ProductName().value(),product.productPrice().value(),product.PurchaseId().value());
-        return productData;
+    public Iterable<ProductData> findByPurchaseId(String purchaseId){
+        return iProductDataRepository.findByPurchaseId(purchaseId);
     }
 
     public Iterable<ProductData> list(){
@@ -28,9 +27,9 @@ public class ProductTransformUseCase {
     public String delete(String id){
         try {
             iProductDataRepository.deleteById(id);
-            return "Se ha borrado con éxito";
+            return "Se ha borrado con éxito el producto de tu compra";
         }catch (Exception e){
-            return "No se ha borrado con éxito";
+            return "No se ha borrado con éxito el producto de tu compra";
         }
     }
 

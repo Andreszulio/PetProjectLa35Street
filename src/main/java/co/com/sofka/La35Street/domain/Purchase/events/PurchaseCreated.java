@@ -27,7 +27,6 @@ public class PurchaseCreated extends DomainEvent {
         return productId;
     }
 
-
     public Brand Brand() {
         return brand;
     }
@@ -39,10 +38,13 @@ public class PurchaseCreated extends DomainEvent {
     public PurchaseDate PurchaseDate() {
         return purchaseDate;
     }
+
     public ClientId clientId(){
         return clientId;
     }
+
     public ClientName clientName(){
         return clientName;
     }
+
 }

@@ -19,13 +19,13 @@ public class Purchase extends AggregateRoot<PurchaseId> {
     protected ClientId clientId;
     protected List<Product> product;
 
-    public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product) {
-        super(purchaseId);
-        this.id = purchaseId.value();
+    public Purchase(PurchaseId entityId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product) {
+        super(entityId);
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
         this.product = product;
+        this.id = entityId.value();
     }
 
     public void Id(String id) {
@@ -34,6 +34,15 @@ public class Purchase extends AggregateRoot<PurchaseId> {
 
     public String Id() {
         return id;
+    }
+
+    public void setIdPurchase(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+
     }
 
     public PurchasePrice PurchasePrice() {
