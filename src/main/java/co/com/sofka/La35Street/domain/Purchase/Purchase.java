@@ -12,7 +12,7 @@ import java.util.List;
 public class Purchase extends AggregateRoot<PurchaseId> {
 
     @Id
-    protected String Id;
+    protected String id;
 
     protected PurchasePrice purchasePrice;
     protected PurchaseDate purchaseDate;
@@ -21,7 +21,7 @@ public class Purchase extends AggregateRoot<PurchaseId> {
 
     public Purchase(PurchaseId purchaseId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product) {
         super(purchaseId);
-        this.Id = purchaseId.value();
+        this.id = purchaseId.value();
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
@@ -29,11 +29,11 @@ public class Purchase extends AggregateRoot<PurchaseId> {
     }
 
     public void Id(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String Id() {
-        return Id;
+        return id;
     }
 
     public PurchasePrice PurchasePrice() {

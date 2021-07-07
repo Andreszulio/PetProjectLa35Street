@@ -9,7 +9,6 @@ public final class PurchaseBuilder {
     protected PurchaseDate purchaseDate;
     protected ClientId clientId;
     protected List<Product> product;
-    protected IsCancelled cancelled;
 
     private PurchaseBuilder(){
     }
@@ -31,10 +30,6 @@ public final class PurchaseBuilder {
     }
     public PurchaseBuilder withProduct(List<Product> product){
         this.product = product;
-        return this;
-    }
-    public PurchaseBuilder withIsCancelled(IsCancelled cancelled){
-        this.cancelled = cancelled;
         return this;
     }
     public Purchase build(){
