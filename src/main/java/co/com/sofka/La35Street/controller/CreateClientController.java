@@ -5,6 +5,7 @@ import co.com.sofka.La35Street.domain.Purchase.commands.AddClient;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.La35Street.domain.useCase.*;
 import co.com.sofka.La35Street.repository.ClientData;
+import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,12 @@ public class CreateClientController {
                        @PathVariable("clientAddress")String clientAddress,
                        @PathVariable("clientEmailAddress")String clientEmailAddress,
                        @PathVariable("clientTelephone")String clientTelephone){
-        Client client = new Client(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone));
-
         AddClient command = new AddClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone));
 
         CreateClientUseCase.Response clientCreated = executedUseCase(command);
 
         String string = "{"
-                + "\"clientId\":" + "\"" + clientCreated.getClient().Id() + "\"" + ","
+                + "\"clientId\":" + "\"" + clientCreated.getClient().identity().value() + "\"" + ","
                 + "\"clientName\":" + "\"" + clientCreated.getClient().ClientName().value()+ "\"" + ","
                 + "\"clientAdress\":" + "\"" + clientCreated.getClient().ClientAdress().value()+ "\"" + ","
                 + "\"clientEmailAdress\":" + "\"" + clientCreated.getClient().ClientEmailAdress().value()+ "\"" + ","
@@ -52,13 +51,33 @@ public class CreateClientController {
     }
 
     @GetMapping(value = "api/findClient")
-    public Iterable<ClientData> list(){
-        return clientTransformUseCase.list();
+    public String listClient(){
+        Iterable<ClientData> clients = clientTransformUseCase.list();
+        String string = "{";
+        for (ClientData client: clients){
+            string = string + "{"
+                    + "\"clientId\":" + "\"" + client.Id() + "\"" + ","
+                    + "\"clientName\":" + "\"" + client.ClientName()+ "\"" + ","
+                    + "\"clientEmail\":" + "\"" + client.ClientEmailAdress() + "\"" + ","
+                    + "\"clientTelephone\":" + "\"" + client.ClientTelephone()+ "\"" + ","
+                    + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\""
+                    + "}"+", \n  \n"+"\t";
+        }
+        string = string + "}";
+        return  string;
     }
 
-    @GetMapping(value = "api/findClient/{clientId}")
-    public ClientData listId(@PathVariable("clientId") String id){
-        return clientTransformUseCase.listId(id);
+    @GetMapping(value = "api/findClient/{id}")
+    public String listIdClient(@PathVariable("id") String id){
+        ClientData client = clientTransformUseCase.listId(id);
+        String string = "{"
+                + "\"clientId\":" + "\"" + client.Id() + "\"" + ","
+                + "\"clientName\":" + "\"" + client.ClientName()+ "\"" + ","
+                + "\"clientEmail\":" + "\"" + client.ClientEmailAdress() + "\"" + ","
+                + "\"clientTelephone\":" + "\"" + client.ClientTelephone()+ "\"" + ","
+                + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\""
+                + "}";
+        return string;
     }
 
 }

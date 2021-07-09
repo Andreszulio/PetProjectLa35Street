@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Client")
 public class Client extends Entity<ClientId> {
 
-    @Id
-    private final String id;
+    //@Id
+    //Private final String id;
 
     private final ClientName clientName;
     private final ClientAdress clientAdress;
@@ -18,7 +18,7 @@ public class Client extends Entity<ClientId> {
 
     public Client(ClientId entityId,ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress,ClientTelephone clientTelephone){
         super(entityId);
-        this.id = entityId.value();
+        //this.id = entityId.value();
         this.clientName = clientName;
         this.clientAdress = clientAdress;
         this.clientEmailAdress = clientEmailAdress;
@@ -41,7 +41,7 @@ public class Client extends Entity<ClientId> {
         return clientTelephone;
     }
 
-    public String Id() {
-        return id;
-    }
+    //public String Id() {
+      //  return id;
+   // }
 }

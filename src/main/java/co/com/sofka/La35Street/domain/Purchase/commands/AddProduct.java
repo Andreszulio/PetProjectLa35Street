@@ -21,15 +21,19 @@ public class AddProduct implements Command {
     public ProductId ProductId() {
         return productId;
     }
+
     public Brand Brand() {
         return brand;
     }
+
     public ProductPrice ProductPrice(){
         return productPrice;
     }
+
     public ProductName ProductName() {
         return productName;
     }
+
     public PurchaseId PurchaseId(){
         return purchaseId;
     }

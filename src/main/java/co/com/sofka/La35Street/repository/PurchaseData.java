@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "Purchase")
@@ -16,14 +17,14 @@ public class PurchaseData {
     protected Integer purchasePrice;
     protected LocalDateTime purchaseDate;
     protected String clientId;
-    protected List<Product> product;
+    protected List<ProductData> product;
 
-    public PurchaseData(String id,Integer purchasePrice, LocalDateTime purchaseDate, String clientId, List<Product> product) {
+    public PurchaseData(String id,Integer purchasePrice, LocalDateTime purchaseDate, String clientId) {
         this.id = id;
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
-        this.product = product;
+        this.product = new ArrayList<>();
     }
 
     public PurchaseData(){
@@ -61,11 +62,11 @@ public class PurchaseData {
         this.clientId = clientId;
     }
 
-    public List<Product> Product() {
+    public List<ProductData> Product() {
         return product;
     }
 
-    public void Product(List<Product> product) {
+    public void Product(List<ProductData> product) {
         this.product = product;
     }
 

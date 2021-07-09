@@ -9,10 +9,11 @@ public class ClientData {
 
     @Id
     protected String id;
-    private String clientName;
-    private String clientAdress;
-    private String clientEmailAdress;
-    private String clientTelephone;
+
+    protected String clientName;
+    protected String clientAdress;
+    protected String clientEmailAdress;
+    protected String clientTelephone;
 
     public ClientData(String id, String clientName, String clientAdress, String clientEmailAdress, String clientTelephone) {
         this.id = id;

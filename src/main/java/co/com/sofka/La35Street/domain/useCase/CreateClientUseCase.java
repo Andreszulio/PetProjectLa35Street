@@ -27,7 +27,7 @@ public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, Crea
     }
 
     public ClientData clientTransform(Client client){
-        ClientData clientData = new ClientData(client.Id(),client.ClientName().value(),client.ClientAdress().value(),client.ClientEmailAdress().value(),client.ClientTelephone().value());
+        ClientData clientData = new ClientData(client.identity().value(),client.ClientName().value(),client.ClientAdress().value(),client.ClientEmailAdress().value(),client.ClientTelephone().value());
         return clientData;
     }
 

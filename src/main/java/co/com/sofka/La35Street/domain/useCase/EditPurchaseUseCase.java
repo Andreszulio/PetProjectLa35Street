@@ -23,8 +23,8 @@ public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, E
     @Override
     public void executeUseCase(RequestCommand<EditPurchase> editPurchaseRequestCommand) {
         EditPurchase command = editPurchaseRequestCommand.getCommand();
-        PurchasePrice purchaseprice = CalculatePrice(command.Product());
-        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.Product()),command.PurchaseDate(),command.ClientId(),command.Product());
+
+        Purchase purchase = new Purchase(command.PurchaseId(),command.PurchaseDate(),command.ClientId());
 
         iPurchaseDataRepository.save(purchaseTransform(purchase));
         emit().onResponse(new Response(purchase));
@@ -32,7 +32,7 @@ public class EditPurchaseUseCase extends UseCase<RequestCommand<EditPurchase>, E
     }
 
     public PurchaseData purchaseTransform(Purchase purchase){
-        PurchaseData purchaseData = new PurchaseData(purchase.identity().value(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value(),purchase.Product());
+        PurchaseData purchaseData = new PurchaseData(purchase.identity().value(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value());
         return purchaseData;
     }
 

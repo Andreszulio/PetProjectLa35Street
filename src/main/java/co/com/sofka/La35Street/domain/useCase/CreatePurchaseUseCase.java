@@ -24,7 +24,8 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
     public void executeUseCase(RequestCommand<AddPurchase> CreateProductRequestCommand) {
 
         AddPurchase command = CreateProductRequestCommand.getCommand();
-        Purchase purchase = new Purchase(command.PurchaseId(),CalculatePrice(command.ProductList()),command.PurchaseDate(),command.ClientId(),command.ProductList());
+
+        Purchase purchase = new Purchase(command.PurchaseId(),command.PurchaseDate(),command.ClientId());
 
         iPurchaseDataRepository.save(purchaseTransform(purchase));
         emit().onResponse(new Response(purchase));
@@ -32,7 +33,7 @@ public class CreatePurchaseUseCase extends UseCase<RequestCommand<AddPurchase>, 
     }
 
     public PurchaseData purchaseTransform(Purchase purchase){
-        PurchaseData purchaseData = new PurchaseData(purchase.getId(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value(),purchase.Product());
+        PurchaseData purchaseData = new PurchaseData(purchase.getId(),purchase.PurchasePrice().value(),purchase.PurchaseDate().value(),purchase.ClientId().value());
         return purchaseData;
     }
 

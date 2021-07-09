@@ -5,7 +5,9 @@ import co.com.sofka.La35Street.domain.Purchase.commands.AddProduct;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.La35Street.domain.useCase.AddProductUseCase;
 import co.com.sofka.La35Street.domain.useCase.ProductTransformUseCase;
+import co.com.sofka.La35Street.repository.ClientData;
 import co.com.sofka.La35Street.repository.ProductData;
+import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +29,12 @@ public class AddProductController {
                        @PathVariable("productPrice") Integer productPrice,
                        @PathVariable("productName") String productName,
                        @PathVariable("purchaseId") String purchaseId) {
-        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice), new PurchaseId(purchaseId));
-
-        AddProduct command = new AddProduct(ProductId.of(productId), new Brand(brand), new ProductPrice(productPrice), new ProductName(productName), new PurchaseId(purchaseId));
+        AddProduct command = new AddProduct(ProductId.of(productId), new Brand(brand), new ProductPrice(productPrice), new ProductName(productName), PurchaseId.of(purchaseId));
 
         AddProductUseCase.Response productAdded = executedUseCase(command);
 
         String string = "{"
-                + "\"productId\":" + "\"" + productAdded.getProduct().Id() + "\"" + ","
+                + "\"productId\":" + "\"" + productAdded.getProduct().identity().value() + "\"" + ","
                 + "\"brand\":" + "\"" + productAdded.getProduct().Brand().value() + "\"" + ","
                 + "\"productPrice\":" + "\"" + productAdded.getProduct().productPrice().value() + "\"" + ","
                 + "\"productName\":" + "\"" + productAdded.getProduct().ProductName().value()+ "\"" + ","
@@ -53,17 +53,38 @@ public class AddProductController {
     }
 
     @GetMapping(value = "api/findProduct")
-    public Iterable<ProductData> list(){
-        return productTransformUseCase.list();
+    public String listProduct(){
+        Iterable<ProductData> products = productTransformUseCase.list();
+        String string = "{";
+        for (ProductData product: products){
+            string = string + "{"
+                    + "\"productId\":" + "\"" + product.Id()+ "\"" + ","
+                    + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
+                    + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
+                    + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
+                    + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                    + "}"+", \n  \n"+"\t";
+        }
+        string = string + "}";
+        return  string;
     }
 
-    @GetMapping(value = "api/findProduct/{productId}")
-    public ProductData listId(@PathVariable("productId") String id){
-        return productTransformUseCase.listId(id);
+    @GetMapping(value = "api/findProduct/{id}")
+    public String listIdProduct(@PathVariable("id") String id){
+        ProductData product = productTransformUseCase.listId(id);
+        String string = "{"
+                + "\"productId\":" + "\"" + product.Id() + "\"" + ","
+                + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
+                + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
+                + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
+                + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                + "}";
+        return string;
     }
 
-    @DeleteMapping(value = "api/deleteProduct/{productId}")
-    public String delete(@PathVariable("productId") String id){
+    @DeleteMapping(value = "api/deleteProduct/{id}")
+    public String delete(@PathVariable("id") String id){
+        productTransformUseCase.findProducts(id);
         return productTransformUseCase.delete(id);
     }
 

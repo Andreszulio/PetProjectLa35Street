@@ -13,13 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EditPurchaseUseCaseTest {
     @Test
     void editAPurchase(){
-        var command = new EditPurchase(PurchaseId.of("760"),ClientId.of("9090"), List.of(
-                new Product(ProductId.of("23-34"), new Brand("Nike"), new ProductName("Tennis"), new ProductPrice(129999),new PurchaseId("9090")),
-                new Product(ProductId.of("24-35"), new Brand("Nike"), new ProductName("Tennis"), new ProductPrice(149999),new PurchaseId("8090")),
-                new Product(ProductId.of("25-36"), new Brand("Adidas"), new ProductName("Camiseta"), new ProductPrice(39000),new PurchaseId("7090"))
-        ));
-        var usecase = new EditPurchaseUseCaseTest();
+        EditPurchase command = new EditPurchase(PurchaseId.of("760"),ClientId.of("9090"));
+        EditPurchaseUseCase usecase = new EditPurchaseUseCase();
         Assertions.assertEquals("760",command.PurchaseId().value());
-        Assertions.assertNotNull(command.Product());
     }
 }

@@ -3,10 +3,10 @@ package co.com.sofka.La35Street.domain.Purchase.values;
 import co.com.sofka.domain.generic.Identity;
 
 public class ProductId extends Identity {
-    private ProductId(String uuid){
-        super(uuid);
+    private ProductId(String id){
+        super(id);
     }
-    public static ProductId of(String uuid){
-        return new ProductId(uuid);
+    public static ProductId of(String id){
+        return new ProductId(id);
     }
 }

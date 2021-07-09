@@ -34,19 +34,11 @@ public class CreatePurchaseController {
     @Autowired
     private ProductTransformUseCase productTransformUseCase;
 
-    @PostMapping(value = "api/savePurchase/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
+    @PostMapping(value = "api/savePurchase/{purchaseId}/{clientId}")
     public String save(@PathVariable("purchaseId")String purchaseId,
-                       @PathVariable("clientId")String clientId,
-                       @PathVariable("productId")String productId,
-                       @PathVariable("brand")String brand,
-                       @PathVariable("productName")String productName,
-                       @PathVariable("productPrice")Integer productPrice) {
-        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice),new PurchaseId(purchaseId));
+                       @PathVariable("clientId")String clientId) {
 
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-
-        AddPurchase command = new AddPurchase(PurchaseId.of(purchaseId), new ClientId(clientId), productList);
+        AddPurchase command = new AddPurchase(PurchaseId.of(purchaseId), new ClientId(clientId));
 
         CreatePurchaseUseCase.Response purchaseCreated = executedUseCase(command);
 
@@ -55,11 +47,7 @@ public class CreatePurchaseController {
                 + "\"purchasePrice\":" + "\"" + purchaseCreated.getPurchase().PurchasePrice().value() + "\"" + ","
                 + "\"purchaseDate\":" + "\"" + purchaseCreated.getPurchase().PurchaseDate().value() + "\"" + ","
                 + "\"clientId\":" + "\"" + purchaseCreated.getPurchase().ClientId().value() + "\"" + ","
-                + "\"product\": [ " + "\"productId\":" + "\"" + productId + "\"" + ","
-                + "\"brand\":" + "\"" + brand + "\"" + ","
-                + "\"productName\":" + "\"" + productName +"\""+ ","
-                + "\"productPrice\":" + "\"" + productPrice +"\""+ ","
-                +"]"
+                + "\"product\":"+ "\"" + purchaseCreated.getPurchase().Product() + "\""
                 +"}";
 
         return string;
@@ -73,19 +61,10 @@ public class CreatePurchaseController {
         return PurchaseCreated;
     }
 
-    @PutMapping(value = "api/editPurchase/{purchaseId}/{clientId}/{productId}/{brand}/{productName}/{productPrice}")
+    @PutMapping(value = "api/editPurchase/{purchaseId}/{clientId}")
     public String edit(@PathVariable("purchaseId")String purchaseId,
-                       @PathVariable("clientId")String clientId,
-                       @PathVariable("productId")String productId,
-                       @PathVariable("brand")String brand,
-                       @PathVariable("productName")String productName,
-                       @PathVariable("productPrice")Integer productPrice) {
-        Product product = new Product(ProductId.of(productId), new Brand(brand), new ProductName(productName), new ProductPrice(productPrice),new PurchaseId(purchaseId));
-
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-
-        EditPurchase command = new EditPurchase(PurchaseId.of(purchaseId), new ClientId(clientId), productList);
+                       @PathVariable("clientId")String clientId) {
+        EditPurchase command = new EditPurchase(PurchaseId.of(purchaseId), new ClientId(clientId));
 
         EditPurchaseUseCase.Response purchaseEdited = executedEditPurchaseUseCase(command);
 
@@ -94,11 +73,7 @@ public class CreatePurchaseController {
                 + "\"purchasePrice\":" + "\""+purchaseEdited.getPurchase().PurchasePrice().value()+"\""+ ","
                 + "\"purchaseDate\":" + "\""+purchaseEdited.getPurchase().PurchaseDate().value()+"\""+ ","
                 + "\"clientId\":" + "\""+purchaseEdited.getPurchase().ClientId().value()+"\""+ ","
-                + "\"product\": [ " + "\"productId\":" + "\"" + productId + "\"" + ","
-                + "\"brand\":" + "\"" + brand + "\"" + ","
-                + "\"productName\":" + "\"" + productName +"\""+ ","
-                + "\"productPrice\":" + "\"" + productPrice +"\""+ ","
-                +"]"
+                + "\"product\":" + purchaseEdited.getPurchase().Product() +"\""
                 +"}";
 
         return string;
@@ -113,23 +88,65 @@ public class CreatePurchaseController {
     }
 
     @GetMapping(value = "api/findPurchase")
-    public Iterable<PurchaseData> listPurchase(){
-        return purchaseTransformUseCase.list();
+    public String listPurchase(){
+        Iterable<PurchaseData> purchases = purchaseTransformUseCase.list();
+        String string = "{";
+        String string2= "";
+        for (PurchaseData purchase: purchases){
+            for (ProductData product: purchase.Product()){
+                string2 = string2 + "{"
+                        + "\"productId\":" + "\"" + product.Id()+ "\"" + ","
+                        + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
+                        + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
+                        + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
+                        + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                        + "}"+", \n  \n"+"\t";
+            }
+            string = string + "{"
+                    + "\"purchaseId\":" + "\"" + purchase.Idaa() + "\"" + ","
+                    + "\"purchasePrice\":" + "\"" + purchase.PurchasePrice()+ "\"" + ","
+                    + "\"purchaseDate\":" + "\"" + purchase.PurchaseDate() + "\"" + ","
+                    + "\"clientId\":" + "\"" + purchase.ClientId()+ "\"" + ","
+                    + "\"product\":"+ "\"" + string2 + "\""
+                    + "}"+", \n  \n"+"\t";
+        }
+        string = string + "}";
+        return  string;
     }
 
-    @GetMapping(value = "api/findPurchase/{purchaseId}")
-    public PurchaseData listIdPurchase(@PathVariable("purchaseId") String id){
-        return purchaseTransformUseCase.listId(id);
+    @GetMapping(value = "api/findPurchase/{id}")
+    public String listIdPurchase(@PathVariable("id") String id){
+        PurchaseData purchase = purchaseTransformUseCase.listId(id);
+        String string = "{"
+                + "\"purchaseId\":" + "\"" + purchase.Idaa() + "\"" + ","
+                + "\"purchasePrice\":" + "\"" + purchase.PurchasePrice()+ "\"" + ","
+                + "\"purchaseDate\":" + "\"" + purchase.PurchaseDate() + "\"" + ","
+                + "\"clientId\":" + "\"" + purchase.ClientId()+ "\"" + ","
+                + "\"product\":"+ "\"" + purchase.Product() + "\""
+                + "}";
+        return string;
     }
 
-    @DeleteMapping(value = "api/deletePurchase/{purchaseId}")
-    public String delete(@PathVariable("purchaseId") String id){
+    @DeleteMapping(value = "api/deletePurchase/{id}")
+    public String delete(@PathVariable("id") String id){
         return purchaseTransformUseCase.delete(id);
     }
 
-    @GetMapping(value = "api/showProducts/{purchaseId}")
-    public Iterable<ProductData> show(@PathVariable("purchaseId") String purchaseId){
-        return productTransformUseCase.findByPurchaseId(purchaseId);
+    @GetMapping(value = "api/showProducts/{id}")
+    public String show(@PathVariable("id") String id){
+        Iterable<ProductData> products = productTransformUseCase.findByPurchaseId(id);
+        String string = "{";
+        for (ProductData product: products){
+            string = string + "{"
+                    + "\"productId\":" + "\"" + product.Id() + "\"" + ","
+                    + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
+                    + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
+                    + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
+                    + "\"purchaseId\":"+ "\"" + product.PurchaseId()+ "\""
+                    + "}"+", \n  \n"+"\t";
+        }
+        string = string + "}";
+        return  string;
     }
 
 }

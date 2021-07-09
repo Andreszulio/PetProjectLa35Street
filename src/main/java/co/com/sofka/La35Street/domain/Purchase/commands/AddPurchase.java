@@ -4,6 +4,7 @@ import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.domain.generic.Command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddPurchase implements Command {
@@ -12,11 +13,11 @@ public class AddPurchase implements Command {
     private final ClientId clientId;
     private final List<Product> productList;
 
-    public AddPurchase(PurchaseId purchaseId, ClientId clientId, List<Product> productList) {
+    public AddPurchase(PurchaseId purchaseId, ClientId clientId) {
         this.purchaseId= purchaseId;
         this.purchaseDate = new PurchaseDate();
         this.clientId = clientId;
-        this.productList = productList;
+        this.productList = new ArrayList<>();
     }
 
     public PurchaseId PurchaseId() {

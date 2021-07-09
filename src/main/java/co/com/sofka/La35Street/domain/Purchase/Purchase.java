@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "Purchase")
@@ -19,24 +20,16 @@ public class Purchase extends AggregateRoot<PurchaseId> {
     protected ClientId clientId;
     protected List<Product> product;
 
-    public Purchase(PurchaseId entityId, PurchasePrice purchasePrice, PurchaseDate purchaseDate, ClientId clientId, List<Product> product) {
+    public Purchase(PurchaseId entityId, PurchaseDate purchaseDate, ClientId clientId) {
         super(entityId);
-        this.purchasePrice = purchasePrice;
+        this.purchasePrice = new PurchasePrice(0);
         this.purchaseDate = purchaseDate;
         this.clientId = clientId;
-        this.product = product;
+        this.product = new ArrayList<>();
         this.id = entityId.value();
     }
 
-    public void Id(String id) {
-        this.id = id;
-    }
-
-    public String Id() {
-        return id;
-    }
-
-    public void setIdPurchase(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
