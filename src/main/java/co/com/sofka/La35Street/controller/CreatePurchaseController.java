@@ -1,5 +1,6 @@
 package co.com.sofka.La35Street.controller;
 
+import co.com.sofka.La35Street.domain.Purchase.Purchase;
 import co.com.sofka.La35Street.domain.Purchase.commands.EditPurchase;
 import co.com.sofka.La35Street.domain.useCase.EditPurchaseUseCase;
 import co.com.sofka.La35Street.domain.useCase.ProductTransformUseCase;
@@ -91,27 +92,43 @@ public class CreatePurchaseController {
     public String listPurchase(){
         Iterable<PurchaseData> purchases = purchaseTransformUseCase.list();
         String string = "{";
-        String string2= "";
         for (PurchaseData purchase: purchases){
-            for (ProductData product: purchase.Product()){
+            String string2 = showList(purchase);
+            string = string + "{"
+                    + "\"purchaseId\":" + "\"" + purchase.Idaa() + "\"" + ","
+                    + "\"purchasePrice\":" + "\"" + purchase.PurchasePrice()+ "\"" + ","
+                    + "\"purchaseDate\":" + "\"" + purchase.PurchaseDate() + "\"" + ","
+                    + "\"clientId\":" + "\"" + purchase.ClientId()+ "\"" + ","
+                    + "\"product\": ["+ string2 +"]"
+                    + "}"+", \n  \n"+"\t";
+        }
+        string = string + "}";
+        return  string;
+    }
+    public String showList(PurchaseData purchase){
+        String string2= "";
+        int cont=0;
+        for (ProductData product: purchase.Product()) {
+            if ((purchase.Product().size()-1)==cont){
                 string2 = string2 + "{"
                         + "\"productId\":" + "\"" + product.Id()+ "\"" + ","
                         + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
                         + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                         + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
                         + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
-                        + "}"+", \n  \n"+"\t";
+                        + "}";
+            }else {
+                string2 = string2 + "{"
+                        + "\"productId\":" + "\"" + product.Id() + "\"" + ","
+                        + "\"productName\":" + "\"" + product.ProductName() + "\"" + ","
+                        + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
+                        + "\"productPrice\":" + "\"" + product.ProductPrice() + "\"" + ","
+                        + "\"purchaseId\":" + "\"" + product.PurchaseId() + "\""
+                        + "}" + ", \n  \n" + "\t";
             }
-            string = string + "{"
-                    + "\"purchaseId\":" + "\"" + purchase.Idaa() + "\"" + ","
-                    + "\"purchasePrice\":" + "\"" + purchase.PurchasePrice()+ "\"" + ","
-                    + "\"purchaseDate\":" + "\"" + purchase.PurchaseDate() + "\"" + ","
-                    + "\"clientId\":" + "\"" + purchase.ClientId()+ "\"" + ","
-                    + "\"product\":"+ "\"" + string2 + "\""
-                    + "}"+", \n  \n"+"\t";
+            cont+=1;
         }
-        string = string + "}";
-        return  string;
+        return string2;
     }
 
     @GetMapping(value = "api/findPurchase/{id}")

@@ -1,13 +1,10 @@
 package co.com.sofka.La35Street.controller;
 
-import co.com.sofka.La35Street.domain.Purchase.Product;
 import co.com.sofka.La35Street.domain.Purchase.commands.AddProduct;
 import co.com.sofka.La35Street.domain.Purchase.values.*;
 import co.com.sofka.La35Street.domain.useCase.AddProductUseCase;
 import co.com.sofka.La35Street.domain.useCase.ProductTransformUseCase;
-import co.com.sofka.La35Street.repository.ClientData;
 import co.com.sofka.La35Street.repository.ProductData;
-import co.com.sofka.La35Street.repository.PurchaseData;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,12 +77,6 @@ public class AddProductController {
                 + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
                 + "}";
         return string;
-    }
-
-    @DeleteMapping(value = "api/deleteProduct/{id}")
-    public String delete(@PathVariable("id") String id){
-        productTransformUseCase.findProducts(id);
-        return productTransformUseCase.delete(id);
     }
 
 }

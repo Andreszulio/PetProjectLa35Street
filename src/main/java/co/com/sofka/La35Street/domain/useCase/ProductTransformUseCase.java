@@ -34,9 +34,9 @@ public class ProductTransformUseCase {
         return productData;
     }
 
-    public String delete(String id){
+    public String delete(Iterable<ProductData> products){
         try {
-            iProductDataRepository.deleteById(id);
+            iProductDataRepository.deleteAll(products);
             return "Se ha borrado con éxito el producto de tu compra";
         }catch (Exception e){
             return "No se ha borrado con éxito el producto de tu compra";
