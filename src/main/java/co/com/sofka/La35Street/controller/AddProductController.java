@@ -25,9 +25,10 @@ public class AddProductController {
                        @PathVariable("brand") String brand,
                        @PathVariable("productPrice") Integer productPrice,
                        @PathVariable("productName") String productName,
-                       @PathVariable("purchaseId") String purchaseId) {
-        AddProduct command = new AddProduct(ProductId.of(productId), new Brand(brand), new ProductPrice(productPrice), new ProductName(productName), PurchaseId.of(purchaseId));
-
+                       @PathVariable("purchaseId") String purchaseId,
+                       @RequestBody String image) {
+        AddProduct command = new AddProduct(ProductId.of(productId), new Brand(brand), new ProductPrice(productPrice), new ProductName(productName), PurchaseId.of(purchaseId), new Image(image));
+        System.out.println(image);
         AddProductUseCase.Response productAdded = executedUseCase(command);
 
         String string = "{"
@@ -36,8 +37,8 @@ public class AddProductController {
                 + "\"productPrice\":" + "\"" + productAdded.getProduct().productPrice().value() + "\"" + ","
                 + "\"productName\":" + "\"" + productAdded.getProduct().ProductName().value()+ "\"" + ","
                 + "\"purchaseId\":" + "\"" + productAdded.getProduct().PurchaseId().value()+ "\"" + ","
+                + "\"image\":"+ "\"" + productAdded.getProduct().image().value() + "\""
                 + "}";
-
         return string;
     }
 
@@ -59,7 +60,8 @@ public class AddProductController {
                     + "\"productName\":" + "\"" + product.ProductName()+ "\"" + ","
                     + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                     + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
-                    + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                    + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""+ ","
+                    + "\"image\":"+ "\"" + product.Image() + "\""
                     + "}"+", \n  \n"+"\t";
         }
         string = string + "}";
@@ -75,6 +77,7 @@ public class AddProductController {
                 + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                 + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
                 + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                + "\"image\":"+ "\"" + product.Image() + "\""
                 + "}";
         return string;
     }

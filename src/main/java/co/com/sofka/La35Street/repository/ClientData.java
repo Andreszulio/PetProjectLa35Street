@@ -14,13 +14,15 @@ public class ClientData {
     protected String clientAdress;
     protected String clientEmailAdress;
     protected String clientTelephone;
+    protected String rol;
 
-    public ClientData(String id, String clientName, String clientAdress, String clientEmailAdress, String clientTelephone) {
+    public ClientData(String id, String clientName, String clientAdress, String clientEmailAdress, String clientTelephone, String rol) {
         this.id = id;
         this.clientName = clientName;
         this.clientAdress = clientAdress;
         this.clientEmailAdress = clientEmailAdress;
         this.clientTelephone = clientTelephone;
+        this.rol = rol;
     }
 
     public String Id() {
@@ -61,5 +63,13 @@ public class ClientData {
 
     public void ClientTelephone(String clientTelephone) {
         this.clientTelephone = clientTelephone;
+    }
+
+    public String Rol() {
+        return rol;
+    }
+
+    public void Rol(String rol) {
+        this.rol = rol;
     }
 }

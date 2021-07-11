@@ -19,7 +19,7 @@ public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, Crea
     @Override
     public void executeUseCase(RequestCommand<AddClient> CreateClientRequestCommand) {
         AddClient command = CreateClientRequestCommand.getCommand();
-        Client client = new Client(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone());
+        Client client = new Client(command.ClientId(), command.ClientName(), command.ClientAdress(), command.ClientEmailAdress(), command.ClientTelephone(),command.rol());
 
         iClientDataRepository.save(clientTransform(client));
         emit().onResponse(new Response(client));
@@ -27,7 +27,7 @@ public class CreateClientUseCase extends UseCase<RequestCommand<AddClient>, Crea
     }
 
     public ClientData clientTransform(Client client){
-        ClientData clientData = new ClientData(client.identity().value(),client.ClientName().value(),client.ClientAdress().value(),client.ClientEmailAdress().value(),client.ClientTelephone().value());
+        ClientData clientData = new ClientData(client.identity().value(),client.ClientName().value(),client.ClientAdress().value(),client.ClientEmailAdress().value(),client.ClientTelephone().value(),client.rol().value());
         return clientData;
     }
 

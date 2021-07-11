@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AddProductUseCaseTest {
     @Test
     void addAProduct(){
-        AddProduct command = new AddProduct(ProductId.of("785"),new Brand("Nike"), new ProductPrice(90000), new ProductName("Tenis"), PurchaseId.of("980"));
+        AddProduct command = new AddProduct(ProductId.of("785"),new Brand("Nike"), new ProductPrice(90000), new ProductName("Tenis"), PurchaseId.of("980"), new Image("https"));
 
         AddProductUseCase usecase = new AddProductUseCase();
         Assertions.assertEquals("785",command.ProductId().value());

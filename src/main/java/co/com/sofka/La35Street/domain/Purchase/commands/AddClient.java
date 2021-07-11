@@ -9,13 +9,15 @@ public class AddClient implements Command {
     private final ClientAdress clientAdress;
     private final ClientEmailAdress clientEmailAdress;
     private final ClientTelephone clientTelephone;
+    private final Rol rol;
 
-    public AddClient(ClientId clientId, ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress,ClientTelephone clientTelephone){
+    public AddClient(ClientId clientId, ClientName clientName, ClientAdress clientAdress, ClientEmailAdress clientEmailAdress,ClientTelephone clientTelephone, Rol rol){
         this.clientId = clientId;
         this.clientName = clientName;
         this.clientAdress = clientAdress;
         this.clientEmailAdress = clientEmailAdress;
         this.clientTelephone = clientTelephone;
+        this.rol = rol;
     }
 
     public ClientId ClientId() {
@@ -32,5 +34,8 @@ public class AddClient implements Command {
     }
     public ClientTelephone ClientTelephone() {
         return clientTelephone;
+    }
+    public Rol rol(){
+        return rol;
     }
 }

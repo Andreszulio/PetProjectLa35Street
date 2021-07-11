@@ -13,13 +13,15 @@ public class ProductData {
     protected String productName;
     protected Integer productPrice;
     protected String purchaseId;
+    protected String image;
 
-    public ProductData(String id, String brand, String productName, Integer productPrice, String purchaseId) {
+    public ProductData(String id, String brand, String productName, Integer productPrice, String purchaseId, String image) {
         this.id = id;
         this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
         this.purchaseId = purchaseId;
+        this.image = image;
     }
 
     public String Id() {
@@ -60,5 +62,13 @@ public class ProductData {
 
     public void PurchaseId(String purchaseId) {
         this.purchaseId = purchaseId;
+    }
+
+    public String Image() {
+        return image;
+    }
+
+    public void Image(String image) {
+        this.image = image;
     }
 }

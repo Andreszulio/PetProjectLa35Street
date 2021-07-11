@@ -31,7 +31,7 @@ public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, AddPr
 
         AddProduct command = AddProductRequestCommand.getCommand();
 
-        Product product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice(),command.PurchaseId());
+        Product product = new Product(command.ProductId(), command.Brand(), command.ProductName(),command.ProductPrice(),command.PurchaseId(),command.image());
 
         modifyPurchase(command.PurchaseId().value(),product);
 
@@ -56,7 +56,7 @@ public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, AddPr
     }
 
     public ProductData productTransform(Product product){
-        ProductData productData = new ProductData(product.identity().value(),product.Brand().value(),product.ProductName().value(),product.productPrice().value(),product.PurchaseId().value());
+        ProductData productData = new ProductData(product.identity().value(),product.Brand().value(),product.ProductName().value(),product.productPrice().value(),product.PurchaseId().value(),product.image().value());
         return productData;
     }
 

@@ -8,21 +8,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Product")
 public class Product extends Entity<ProductId> {
 
-    //@Id
-    //private String id;
-
     private final Brand brand;
     private final ProductName productName;
     private final ProductPrice productPrice;
     private final PurchaseId purchaseId;
+    private final Image image;
 
-    public Product(ProductId entityId, Brand brand, ProductName productName, ProductPrice productPrice,PurchaseId purchaseId) {
+    public Product(ProductId entityId, Brand brand, ProductName productName, ProductPrice productPrice,PurchaseId purchaseId, Image image) {
         super(entityId);
-       //this.id = entityId.value();
         this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
         this.purchaseId = purchaseId;
+        this.image = image;
     }
 
     public Brand Brand() {
@@ -37,15 +35,12 @@ public class Product extends Entity<ProductId> {
         return productPrice;
     }
 
-    //public String Id() {
-      //  return id;
-   // }
-
-    //public void Id(String id) {
-       // this.id = id;
-   // }
-
     public PurchaseId PurchaseId() {
         return purchaseId;
     }
+
+    public Image image(){
+        return image;
+    }
+
 }

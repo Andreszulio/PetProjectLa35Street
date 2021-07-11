@@ -21,13 +21,14 @@ public class CreateClientController {
     @Autowired
     private ClientTransformUseCase clientTransformUseCase;
 
-    @PostMapping(value = "api/saveClient/{clientId}/{clientName}/{clientAddress}/{clientEmailAddress}/{clientTelephone}")
+    @PostMapping(value = "api/saveClient/{clientId}/{clientName}/{clientAddress}/{clientEmailAddress}/{clientTelephone}/{rol}")
     public String save(@PathVariable("clientId")String clientId,
                        @PathVariable("clientName")String clientName,
                        @PathVariable("clientAddress")String clientAddress,
                        @PathVariable("clientEmailAddress")String clientEmailAddress,
-                       @PathVariable("clientTelephone")String clientTelephone){
-        AddClient command = new AddClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone));
+                       @PathVariable("clientTelephone")String clientTelephone,
+                       @PathVariable("rol") String rol){
+        AddClient command = new AddClient(ClientId.of(clientId),new ClientName(clientName),new ClientAdress(clientAddress),new ClientEmailAdress(clientEmailAddress),new ClientTelephone(clientTelephone), new Rol(rol));
 
         CreateClientUseCase.Response clientCreated = executedUseCase(command);
 
@@ -37,6 +38,7 @@ public class CreateClientController {
                 + "\"clientAdress\":" + "\"" + clientCreated.getClient().ClientAdress().value()+ "\"" + ","
                 + "\"clientEmailAdress\":" + "\"" + clientCreated.getClient().ClientEmailAdress().value()+ "\"" + ","
                 + "\"clientTelephone\":" + "\"" + clientCreated.getClient().ClientTelephone().value()+ "\"" + ","
+                + "\"rol\":" + "\"" + clientCreated.getClient().rol().value()+ "\""
                 +"}";
 
         return string;
@@ -60,7 +62,8 @@ public class CreateClientController {
                     + "\"clientName\":" + "\"" + client.ClientName()+ "\"" + ","
                     + "\"clientEmail\":" + "\"" + client.ClientEmailAdress() + "\"" + ","
                     + "\"clientTelephone\":" + "\"" + client.ClientTelephone()+ "\"" + ","
-                    + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\""
+                    + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\"" + ","
+                    + "\"rol\":" + "\"" + client.Rol()+ "\""
                     + "}"+", \n  \n"+"\t";
         }
         string = string + "}";
@@ -75,7 +78,8 @@ public class CreateClientController {
                 + "\"clientName\":" + "\"" + client.ClientName()+ "\"" + ","
                 + "\"clientEmail\":" + "\"" + client.ClientEmailAdress() + "\"" + ","
                 + "\"clientTelephone\":" + "\"" + client.ClientTelephone()+ "\"" + ","
-                + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\""
+                + "\"clientAddress\":"+ "\"" + client.ClientAdress() + "\"" + ","
+                + "\"rol\":" + "\"" + client.Rol()+ "\""
                 + "}";
         return string;
     }

@@ -116,6 +116,7 @@ public class CreatePurchaseController {
                         + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                         + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
                         + "\"purchaseId\":"+ "\"" + product.PurchaseId() + "\""
+                        + "\"image\":"+ "\"" + product.Image() + "\""
                         + "}";
             }else {
                 string2 = string2 + "{"
@@ -124,6 +125,7 @@ public class CreatePurchaseController {
                         + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                         + "\"productPrice\":" + "\"" + product.ProductPrice() + "\"" + ","
                         + "\"purchaseId\":" + "\"" + product.PurchaseId() + "\""
+                        + "\"image\":"+ "\"" + product.Image() + "\""
                         + "}" + ", \n  \n" + "\t";
             }
             cont+=1;
@@ -160,6 +162,7 @@ public class CreatePurchaseController {
                     + "\"brand\":" + "\"" + product.Brand() + "\"" + ","
                     + "\"productPrice\":" + "\"" + product.ProductPrice()+ "\"" + ","
                     + "\"purchaseId\":"+ "\"" + product.PurchaseId()+ "\""
+                    + "\"image\":"+ "\"" + product.Image() + "\""
                     + "}"+", \n  \n"+"\t";
         }
         string = string + "}";
